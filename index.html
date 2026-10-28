@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="theme-color" content="#12303a">
+<meta name="description" content="A 3 to 8 player bluffing word game aboard a rainy night ferry. One passenger holds a different ticket. Find the stowaway.">
+<title>The Stowaway</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2312303a' stroke='%23c9a24b' stroke-width='3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Impact,sans-serif' font-size='16' fill='%23c9a24b'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="rain" aria-hidden="true"></div>
+<div class="offline-banner" role="status">RECONNECTING TO THE FERRY…</div>
+<header class="masthead">
+  <a class="seal" href="/" aria-label="The Stowaway home"><span>NF</span></a>
+  <div class="mast-title">THE STOWAWAY <b>NIGHT FERRY NO. 09</b></div>
+  <div class="mast-tools">
+    <span class="mast-chip" data-fx-chip title="Your passenger rank"></span>
+    <button id="sound-toggle" class="round-btn" aria-pressed="true" aria-label="Sound on" title="Sound"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9h4l5-4v14l-5-4H4z"/><path class="wave" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="mute" d="M16 9l6 6M22 9l-6 6"/></svg></button>
+    <button id="help-open" class="round-btn" aria-label="How to play" title="How to play">?</button>
+  </div>
+</header>
+
+<main>
+  <section id="boarding" class="boarding">
+    <div class="weatherline"><span>LAST CROSSING BEFORE DAWN</span></div>
+    <div class="hero-ticket">
+      <div class="hero-stub" aria-hidden="true"><span>ADMIT ONE</span><b id="stub-no">Nº 0917</b></div>
+      <div class="hero-body">
+        <div class="hero-kicker">A GAME OF WORDS &amp; SUSPICION · 3–8 PASSENGERS</div>
+        <h1>THE <em>STOWAWAY</em></h1>
+        <p class="hero-copy">Every passenger holds the same destination. One holds a near match and doesn't know it. Place lanterns on the night chart, spot whose drifts, and vote the stowaway ashore.</p>
+        <form id="board-form" class="board-card" autocomplete="off">
+          <label for="name">Name on your ticket</label>
+          <input id="name" maxlength="14" placeholder="e.g. Oliver" autocomplete="nickname" spellcheck="false">
+          <label for="code">Ticket number</label>
+          <div class="joinrow">
+            <input id="code" maxlength="4" placeholder="KFRT" autocapitalize="characters" spellcheck="false" aria-describedby="code-hint">
+            <button class="btn brass" id="join" type="submit">BOARD THE FERRY <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="code-hint" id="code-hint">Four letters from whoever bought the ticket (the host), like <b data-example-code>KFRT</b>. Starting your own game? Skip this.</p>
+          <div class="divider"><span>or begin a crossing</span></div>
+          <div class="host-row">
+            <button id="host" class="btn dark" type="button">BUY A TICKET <small>HOST</small></button>
+            <button id="practice" class="btn outline" type="button">PRACTICE <small>WITH 2 BOTS</small></button>
+          </div>
+          <p class="solo-hint">Playing alone? Tap <b>Practice</b> to sail with two bot passengers.</p>
+          <p id="error" class="error" role="alert"></p>
+        </form>
+      </div>
+    </div>
+    <div class="passport-row">
+      <div id="passport" class="fx-card passport" aria-label="Your passport"></div>
+      <ol class="voyage-steps">
+      <li><b>I</b><span>Hold to read your secret ticket.</span></li>
+      <li><b>II</b><span>Give one word that proves you know it.</span></li>
+      <li><b>III</b><span>Vote the stowaway ashore. If caught, they get one last guess.</span></li>
+      </ol>
+    </div>
+  </section>
+  <section id="play" class="play hidden"></section>
+</main>
+
+<dialog id="how" aria-labelledby="how-title">
+  <button class="dialog-x" id="how-close" aria-label="Close">×</button>
+  <div class="notice-head">PURSER'S NOTICE · <span id="how-step">1 OF 3</span></div>
+  <div class="carousel" id="carousel">
+    <article class="slide active">
+      <div class="slide-art" aria-hidden="true"><div class="mini-ticket">BAGEL</div><div class="mini-ticket">BAGEL</div><div class="mini-ticket odd">PRETZEL</div></div>
+      <h2 id="how-title">Everyone holds a ticket</h2>
+      <p>All passengers share one destination word. The stowaway's ticket says something close. They don't know they're the stowaway.</p>
+    </article>
+    <article class="slide">
+      <div class="slide-art" aria-hidden="true"><div class="mini-chart"><span class="mx">CHEAP ← → PRICEY</span><i style="left:28%;top:34%"></i><i style="left:36%;top:28%"></i><i style="left:31%;top:42%"></i><i class="odd" style="left:74%;top:70%"></i></div></div>
+      <h2>Light your lantern on the night chart</h2>
+      <p>The captain draws two scales, like Cheap ↔ Pricey and Everyday ↔ Special. Tap where your destination belongs. Every lantern lights at once, twice per crossing. Whose lantern drifted from the pack?</p>
+    </article>
+    <article class="slide">
+      <div class="slide-art" aria-hidden="true"><div class="mini-stamp">STOWAWAY</div></div>
+      <h2>Vote them ashore</h2>
+      <p>Spot the stowaway: +100 each. Stowaway escapes: +200. Caught? They get one guess at the real word for +100. Once per voyage, shine the Purser’s Lantern on a passenger to learn privately if their ticket matches yours.</p>
+    </article>
+  </div>
+  <div class="carousel-nav">
+    <button class="link-btn" id="how-skip">Skip</button>
+    <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+    <button class="btn brass" id="how-next">NEXT →</button>
+  </div>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="announcer" class="sr-only" aria-live="polite"></div>
+<script src="/fx.js"></script>
+<script src="/client.js"></script>
+</body>
+</html>
