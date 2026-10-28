@@ -1,5 +1,7 @@
 # The Stowaway
 
+![The Stowaway poster: the night ferry in the rain, a STOWAWAY CAUGHT stamp, your ticket against a sealed one, the Night Chart and the passenger rank medals](stoway_cover.jpg)
+
 A 3–8 player bluffing word game aboard a rainy night ferry. Every passenger holds the same destination word except one stowaway, who holds a near match and doesn't know it. Place lanterns on the Night Chart, spot whose lantern drifts from the pack, talk it over, vote the stowaway ashore. If caught, the stowaway gets one last guess at the real word.
 
 ## Run locally
@@ -38,5 +40,7 @@ Scoring: +100 to each passenger who voted for the stowaway, +200 to a stowaway w
 - Hold-to-reveal ticket, porthole timer, rubber-stamp reveal, synthesised ferry horn and sounds, haptics, 3-card how-to carousel, screen-reader announcements, reduced motion
 - Only `index.html`, `client.js`, `fx.js` and `style.css` are served; `/healthz` returns `ok` for uptime monitors
 - Gamified layer (`fx.js`): passenger ranks from Deckhand to Admiral of the Night, XP and eight passport stamps saved on the device, crossing bumpers, typewriter verdicts, vote tokens dropping onto the tally, luggage-tag avatars, rank arrows, a podium and a shareable result card
+
+Submission details (title, description, cover, link) are in [SUBMISSION.md](SUBMISSION.md).
 
 Rooms and scores are held in memory and reset when the server restarts.
